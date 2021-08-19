@@ -95,7 +95,15 @@ $('#carname-details').on('click', () => {
 
 function pushcar(idx) {
   var username_ = $('#username').val();
-  const newcar = cars[idx];
+  // const newcar = cars[idx];
+  const newcar = {
+    "ts": "1529542230",
+    "temp": 12,
+    "loc": {
+      "lat": -37.84674,
+      "lon": 145.115113
+    }
+  }
   const body = {
     username_,
     newcar

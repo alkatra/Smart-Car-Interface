@@ -11,10 +11,14 @@ function addRoomsAndCars() {
     for(let i = 0; i < currentUser.cars.length; i++) {
         $('#cars-edit').append(`
         <div class="card text-white bg-info mb-3" style="width: 10rem;"> 
-            <div class="card-body" style="padding: 4%;">
+            <div class="card-body" style="padding: 4%;" onclick='choosecar(${i})'>
                 ${currentUser.cars[i]}
             </div>
         </div>
         `)
     }
+}
+
+function choosecar(idx) {
+    
 }

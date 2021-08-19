@@ -22,6 +22,10 @@ app.get('/addroom', (req, res) => {
     res.sendFile(`${base}/addroom.html`);
 });
 
+app.get('/carpage', (req, res) => {
+    res.sendFile(`${base}/carpage.html`);
+})
+
 app.get('*', (req,res) => {
     res.sendFile(`${base}/404.html`);
 });
