@@ -17,6 +17,11 @@ html, body {
     /* background-color:white; */
 }
 
+#success-second-row {
+    margin: auto;
+    max-width: 50%;
+}
+
 #third-row {
     height: 33%;
     max-width: 20%;
