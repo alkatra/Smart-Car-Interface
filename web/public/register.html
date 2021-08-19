@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="A web page about IoT Applications" />
+    <meta name="author" content="SAGAR GUPTA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css">
+    <title>Add a new User</title>
+  </head>
+
+  <body>
+    <div id="r-first-row"></div>
+    <div id="r-second-row">
+      <div class="col-sm-3">
+        <div class="card text-white bg-info mb-3"><div class="card-header"><h2><center>Add a new tenant</center></h1></div>
+          <div class="card-body">
+            <div class="form-group">
+                <label for="id">Username/ID:</label>
+                <input type="text" class="form-control" id="username" />
+            </div>
+            
+            <div class="form-group">
+                <label for="name">Password</label>
+                <input type="password" class="form-control" id="password" />
+            </div>
+            
+            <button class="btn btn-warning" id="signup-details">Register This User</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body"  style="padding: 4%;">
+              <div class="form-group">
+                <label for="name">Room Name</label>
+                <input type="text" class="form-control" id="roomname" />
+              </div>
+              <button class="btn btn-warning" id="roomname-details">Add Room</button>
+            </div>
+          </div>
+      </div>
+      <div class="col-sm-3">
+        <div id="append-rooms">
+          <h2>Rooms:</br></h2>
+        </div>
+      </div>
+    </div>
+
+
+        
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="login-signup.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
