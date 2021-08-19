@@ -63,6 +63,7 @@ app.post('/api/users', (req, res) => {
 // app.post('/api/users/update/color', Controller.changeColor); 
  
 app.post('/api/users/update/rooms', Controller.addRoom); 
+app.post('/api/users/update/cars', Controller.addCar); 
 
 app.listen(port, () => {
     console.log(`listening on port ${port}`);

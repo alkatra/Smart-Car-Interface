@@ -5,6 +5,7 @@ var curUser = JSON.parse(localStorage.getItem('curUser')) || "";
 const API_URL = 'http://localhost:5000/api';
 
 var rooms = [];
+var cars = [];
 
 $('#signup-redirect').on('click', () => {
     location.href = "/signup";
@@ -59,7 +60,9 @@ $('#signup-details').on('click', () => {
   for(let i = 0; i < rooms.length; i++) {
     pushroom(i);
   }
-  location.href = '/login';
+  for(let j = 0; j < cars.length; j++) {
+    pushcar(j);
+  }
 })
 
 $('#roomname-details').on('click', () => {
@@ -77,6 +80,35 @@ $('#roomname-details').on('click', () => {
   
 })
 
+$('#carname-details').on('click', () => {
+  const carname = $('#carname').val();
+  cars.push(carname);
+  
+  $('#append-cars').append(`
+  <div class="card text-white bg-info mb-3"> 
+    <div class="card-body"  style="padding: 4%;">
+         ${cars[cars.length - 1]}
+    </div>
+  </div>
+  `);
+})
+
+function pushcar(idx) {
+  var username_ = $('#username').val();
+  const newcar = cars[idx];
+  const body = {
+    username_,
+    newcar
+  };
+  console.log(body);
+  $.post(`${API_URL}/users/update/cars`, body).then(response => {
+  
+  })
+  .catch(error => {
+    console.error(`Error: ${error}`);
+  });
+}
+
 function pushroom(idx) {
   var username_ = $('#username').val();
   const newroom = rooms[idx];
@@ -86,7 +118,7 @@ function pushroom(idx) {
   };
   
   $.post(`${API_URL}/users/update/rooms`, body).then(response => {
-    // location.href='/';
+
   })
   .catch(error => {
     console.error(`Error: ${error}`);
