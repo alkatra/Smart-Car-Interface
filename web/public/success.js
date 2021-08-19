@@ -20,5 +20,5 @@ function addRoomsAndCars() {
 }
 
 function choosecar(idx) {
-    
+    location.href=`/carpage?id=${idx}`;
 }

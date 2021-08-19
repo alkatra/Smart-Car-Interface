@@ -9,7 +9,6 @@ class currentUserClass {
     } 
 }
 
-
 $.get(`${API_URL}/users`).then(response => {
     response.forEach(users => {
         if(users.username == curUser) {
