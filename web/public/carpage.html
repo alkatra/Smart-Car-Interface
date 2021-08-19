@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="A web page about IoT Applications" />
+    <meta name="author" content="SAGAR GUPTA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css">
+    <title>Smart Car</title>
+  </head>
+
+  <body>
+    <div id="spacer"></div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <div class="card text-white bg-info mb-3">
+            <div class="card-body"  style="padding: 4%;">
+              <center><h1>Climate Controls</h1>
+              <h4>Current Temperature Setting: <br/>
+                <div id="add-temp">
+                  <!-- ADD TEMPERATURE FROM JS -->
+                </div>
+                <br/>
+                </h4>
+                <button class="btn btn-danger" id="temp-increase">Increase</button>
+                <button class="btn btn-primary" id="temp-decrease">Decrease</button></center>
+              </div>
+            </div>
+            <div id="add-error" style="max-width: 100%;"></div>
+        </div>
+        <div class="col-sm">
+          <div class="card text-white bg-info mb-3">
+            <div class="card-body"  style="padding: 6%;">
+              <center><h1>Seat Positioning</h1></center>
+              <div id="seat-div"><img src="seat.png" id="seat-img" class="center"></div>
+              <center><br/>
+              <button class="btn btn-warning" id="seat-decrease">Shift Left</button>
+              <button class="btn btn-warning" id="seat-increase">Shift Right</button></center>
+            </div>
+            <div id="add-error" style="max-width: 100%;"></div>
+          </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="current-user.js"></script> -->
+    <script src="carpage.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  </body>
