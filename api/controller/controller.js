@@ -30,3 +30,11 @@ exports.updateTemp = (req,res) => {{
         res.status(200).send({message: `done`}));
 }}
 
+exports.updateSeat = (req,res) => {{
+    carName = req.body.carName_;
+    username =  req.body.username_;
+    newsetting = req.body.newsetting;
+    userDB.findOneAndUpdate({"username": username, "cars.carName": carName}, {$set: {"cars.$.seatSetting": mewsetting}}).then(
+        res.status(200).send({message: `done`}));
+}}
+

@@ -65,6 +65,7 @@ app.post('/api/users', (req, res) => {
 app.post('/api/users/update/rooms', Controller.addRoom); 
 app.post('/api/users/update/cars', Controller.addCar); 
 app.post('/api/users/update/temp', Controller.updateTemp); 
+app.post('/api/users/update/seat', Controller.updateSeat); 
 
 
 app.listen(port, () => {
