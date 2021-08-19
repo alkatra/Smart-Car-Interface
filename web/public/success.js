@@ -2,7 +2,7 @@ function addRoomsAndCars() {
     for(let i = 0; i < currentUser.rooms.length; i++) {
         $('#rooms-edit').append(`
         <div class="card text-white bg-info mb-3" style="width: 10rem;"> 
-            <div class="card-body" style="padding: 4%;">
+            <div class="card-body" style="padding: 4%;user-select: none;" onclick='chooseroom(${i})'>
                 ${currentUser.rooms[i]}
             </div>
         </div>
@@ -11,8 +11,8 @@ function addRoomsAndCars() {
     for(let i = 0; i < currentUser.cars.length; i++) {
         $('#cars-edit').append(`
         <div class="card text-white bg-info mb-3" style="width: 10rem;"> 
-            <div class="card-body" style="padding: 4%;" onclick='choosecar(${i})'>
-                ${currentUser.cars[i]}
+            <div class="card-body" style="padding: 4%;user-select: none;" onclick='choosecar(${i})'>
+                ${currentUser.cars[i].carName}
             </div>
         </div>
         `)

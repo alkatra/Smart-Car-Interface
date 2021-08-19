@@ -8,7 +8,17 @@ exports.addRoom = (req,res) => {{
 
 exports.addCar = (req,res) => {{
     username =  req.body.username_;
-    newcar = req.body.newcar;
-    userDB.findOneAndUpdate({"username": username}, {$push: {"cars": newcar}}).then(res.status(200).send({message: `dones`}));
+    carName = req.body.carName;
+    climSetting = req.body.climSetting;
+    seatSetting = req.body.seatSetting;
+    lightColor = req.body.lightColor;
+    workAddress = req.body.workAddress;
+    userDB.findOneAndUpdate({"username": username}, {$push: {"cars": {
+        "carName": carName,
+        "climSetting": climSetting,
+        "seatSetting": seatSetting,
+        "lightColor": lightColor,
+        "workAddress": workAddress
+    }}}).then(res.status(200).send({message: `dones`}));
 }}
 
