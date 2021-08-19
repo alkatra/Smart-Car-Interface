@@ -20,10 +20,12 @@ $('#signup-redirect').on('click', () => {
     location.href = "/signup";
 })
 
+function removeError() {
+  document.getElementById('user-not-found').innerHTML = ``
+}
+
 function invalidDetails() {
-    $('#user-not-found').append(`
-      <div class='alert alert-danger' role='alert'>User details incorrect/nonexistent, try again.</div>`
-    );
+    document.getElementById('user-not-found').innerHTML = `<div class='alert alert-danger' role='alert'><button class="btn btn-danger" onclick="removeError()"> X </button>    User details incorrect/nonexistent.</div>`;
 }
 
 $('#login-details').on('click', () => {
@@ -96,7 +98,7 @@ $('#roomname-details').on('click', () => {
 $('#carname-details').on('click', () => {
   const carName_ = $('#car-name').val();
   const workAddress_ = $('#work-address').val();
-  const climSetting_ = $('#climSetting').val();
+  const climSetting_ = 24;
 
   newcar = new cardetails(carName_, climSetting_, workAddress_);
   console.log(newcar);

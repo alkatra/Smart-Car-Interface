@@ -22,3 +22,11 @@ exports.addCar = (req,res) => {{
     }}}).then(res.status(200).send({message: `dones`}));
 }}
 
+exports.updateTemp = (req,res) => {{
+    carName = req.body.carName_;
+    username =  req.body.username_;
+    newtemp = req.body.newtemp;
+    userDB.findOneAndUpdate({"username": username, "cars.carName": carName}, {$set: {"cars.$.climSetting": newtemp}}).then(
+        res.status(200).send({message: `done`}));
+}}
+

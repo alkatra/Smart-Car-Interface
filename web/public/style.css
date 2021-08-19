@@ -33,6 +33,10 @@ html, body {
     height: 30%;
 }
 
+#spacer {
+    min-height:20%;
+}
+
 #r-second-row {
     /* height:60%; */
     /* min-width: 70%; */
@@ -51,16 +55,16 @@ html, body {
 }
 
 #Fa, #Fb, #Sa, #Sb {
-   width: 50%; 
+   /* width: 50%;  */
    /* border: grey solid 5px; */
    /* background-color:white; */
-   max-width: 40%;
+   /* max-width: 40%; */
    margin: auto;
    
 }
 
 #add-temp {
-    color:rgb(59, 93, 170);
+    color:rgb(255, 255, 255);
 }
 
 .center {
