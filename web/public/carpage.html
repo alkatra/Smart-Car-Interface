@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <title>Smart Car</title>
   </head>
 
@@ -29,6 +30,7 @@
                 <button class="btn btn-primary" id="temp-decrease">Decrease</button></center>
               </div>
             </div>
+            <div id="map"></div>
             <div id="add-error" style="max-width: 100%;"></div>
         </div>
         <div class="col-sm">
@@ -44,6 +46,13 @@
           </div>
       </div>
     </div>
+  </div>
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNWtz-MGf1IrEK_5Ny1jg2puwLHImKYhw&callback=initMap&libraries=&v=weekly"
+      async
+    ></script>
     
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
