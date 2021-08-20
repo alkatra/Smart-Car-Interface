@@ -3,6 +3,9 @@ var curUser = JSON.parse(localStorage.getItem('curUser')) || "";
 
 var user_id = 0;
 var car_id = 0;
+const SEAT_LIMIT = 60;
+const TEMP_L_LIMIT = 15;
+const TEMP_U_LIMIT = 32;
 
 class currentUserClass {
     constructor(username, rooms, cars) {
@@ -47,53 +50,53 @@ function adjustSeat() {
 }
 
 $('#seat-decrease').on('click', () => {
-    if(currentUser.cars[car_id].seatSetting > -100) {
+    if(currentUser.cars[car_id].seatSetting > -1 * SEAT_LIMIT) {
         handleSeat(false);
         adjustSeat();
     }
     else {
         addError();
     }
-    if(urrentUser.cars[car_id].seatSetting == 100) {
+    if(currentUser.cars[car_id].seatSetting == SEAT_LIMIT - 10) {
         removeError();
     }
 })
 
 $('#seat-increase').on('click', () => {
-    if(currentUser.cars[car_id].seatSetting < 100) {
+    if(currentUser.cars[car_id].seatSetting < SEAT_LIMIT) {
         handleSeat(true);
         adjustSeat();
     }
     else {
         addError();
     }
-    if(urrentUser.cars[car_id].seatSetting == -100) {
+    if(currentUser.cars[car_id].seatSetting == -1 * SEAT_LIMIT + 10) {
         removeError();
     }
 })
 
 $('#temp-increase').on('click', () => {
-    if(currentUser.cars[car_id].climSetting < 32) {
+    if(currentUser.cars[car_id].climSetting < TEMP_U_LIMIT) {
         handleTemp(true);
         addTemp();
     }
     else {
         addError();
     }
-    if(currentUser.cars[car_id].climSetting == 16) {
+    if(currentUser.cars[car_id].climSetting == TEMP_L_LIMIT + 1) {
         removeError();
     }
 })
 
 $('#temp-decrease').on('click', () => {
-    if(currentUser.cars[car_id].climSetting > 15) {
+    if(currentUser.cars[car_id].climSetting > TEMP_L_LIMIT) {
         handleTemp(false);
         addTemp();
     }
     else {
         addError();
     }
-    if(currentUser.cars[car_id].climSetting == 31) {
+    if(currentUser.cars[car_id].climSetting == TEMP_U_LIMIT - 1) {
         removeError();
     }
     
@@ -106,6 +109,18 @@ function handleTemp(boolValue) {
     else {
         currentUser.cars[car_id].climSetting--;
     }
+
+    // FOLLOWING CODE IS TO PREVENT MONGO FROM SOMETIMES ADDING UNIT TO THE END INSTEAD OF ADDING NUMBER 
+    // EXAMPLE 4 + 1 SOMETIMES GIVES 41
+    if(currentUser.cars[car_id].climSetting > TEMP_U_LIMIT) {
+        currentUser.cars[car_id].climSetting = TEMP_U_LIMIT;
+        addTemp();
+    }
+    else if(currentUser.cars[car_id].climSetting < TEMP_L_LIMIT) {
+        currentUser.cars[car_id].climSetting = -TEMP_U_LIMIT;
+        addTemp();
+    }
+
     const carName_ = currentUser.cars[car_id].carName;
     const username_ = currentUser.username;
     const newtemp = currentUser.cars[car_id].climSetting;
@@ -120,11 +135,26 @@ function handleTemp(boolValue) {
 
 function handleSeat(boolValue) {
     if(boolValue) {
+        if(currentUser.cars[car_id].seatSetting + 10 > SEAT_LIMIT) {
+            console.log("y");
+        }
         currentUser.cars[car_id].seatSetting += 10;
     }
     else {
         currentUser.cars[car_id].seatSetting -= 10;
     }
+
+    // FOLLOWING CODE IS TO PREVENT MONGO FROM SOMETIMES ADDING UNIT TO THE END INSTEAD OF ADDING NUMBER 
+    // EXAMPLE 4 + 1 SOMETIMES GIVES 41
+    if(currentUser.cars[car_id].seatSetting > SEAT_LIMIT) {
+        currentUser.cars[car_id].seatSetting = SEAT_LIMIT;
+        adjustSeat();
+    }
+    else if(currentUser.cars[car_id].seatSetting < -1 * SEAT_LIMIT) {
+        currentUser.cars[car_id].seatSetting = SEAT_LIMIT * -1;
+        adjustSeat();
+    }
+
     const carName_ = currentUser.cars[car_id].carName;
     const username_ = currentUser.username;
     const newsetting = currentUser.cars[car_id].seatSetting;
