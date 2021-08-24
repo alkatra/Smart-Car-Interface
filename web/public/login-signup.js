@@ -97,10 +97,11 @@ $('#roomname-details').on('click', () => {
 
 $('#carname-details').on('click', () => {
   const carName_ = $('#car-name').val();
+  const buildingAddress = "70 Southbank Blvd, Southbank VIC 3006, Australia"
   const workAddress_ = $('#work-address').val();
   const climSetting_ = 24;
 
-  newcar = new cardetails(carName_, climSetting_, workAddress_);
+  newcar = new cardetails(carName_, climSetting_, buildingAddress,workAddress_);
   console.log(newcar);
 
   cars.push(newcar);

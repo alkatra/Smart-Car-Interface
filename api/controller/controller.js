@@ -38,3 +38,11 @@ exports.updateSeat = (req,res) => {{
         res.status(200).send({message: `done`}));
 }}
 
+exports.changeColor = (req,res) => {{
+    carName = req.body.carName_;
+    username =  req.body.username_;
+    newcolor = req.body.newcolor;
+    userDB.findOneAndUpdate({"username": username, "cars.carName": carName}, {$set: {"cars.$.lightColor": newcolor}}).then(
+        res.status(200).send({message: `done`}));
+}}
+

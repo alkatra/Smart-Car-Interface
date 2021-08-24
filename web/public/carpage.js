@@ -1,3 +1,15 @@
+document.getElementById("color-pink").style.backgroundColor = "pink";
+document.getElementById("color-blue").style.backgroundColor = "lightblue";
+document.getElementById("color-grey").style.backgroundColor = "lightgrey";
+document.getElementById("color-orange").style.backgroundColor = "orange";
+document.getElementById("color-green").style.backgroundColor = "green";
+document.getElementById("color-plum").style.backgroundColor = "plum";
+document.getElementById("color-slateblue").style.backgroundColor = "slateblue";
+document.getElementById("color-lightsalmon").style.backgroundColor = "lightsalmon";
+document.getElementById("color-khaki").style.backgroundColor = "khaki";
+document.getElementById("color-seagreen").style.backgroundColor = "seagreen";
+document.getElementById("color-rosybrown").style.backgroundColor = "rosybrown";
+
 const API_URL = 'http://localhost:5000/api';
 var curUser = JSON.parse(localStorage.getItem('curUser')) || "";
 
@@ -24,7 +36,7 @@ function addError() {
 }
 
 function addCarName() {
-    document.getElementById('spacer').innerHTML = `<br/><br/><h1><center>${currentUser.cars[car_id].carName}</h1></center>`;
+    document.getElementById('spacer').innerHTML = `<br/><br/><h1><center>${currentUser.username}'s ${currentUser.cars[car_id].carName}</h1></center>`;
 }
 
 $.get(`${API_URL}/users`).then(response => {
@@ -34,6 +46,8 @@ $.get(`${API_URL}/users`).then(response => {
             addTemp();
             addCarName();
             adjustSeat();
+            loadDirections();
+            changebgcolor();
         }
     });
 })
@@ -168,26 +182,28 @@ function handleSeat(boolValue) {
 
 let map;
 
-function initMap() {
+function loadDirections() {
     const directionsService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer();
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 7,
-      center: { lat: 41.85, lng: -87.65 },
-    });
+    const map = new google.maps.Map(document.getElementById("map"));
     directionsRenderer.setMap(map);
-  
     calculateAndDisplayRoute(directionsService, directionsRenderer);
-  }
+    const trafficLayer = new google.maps.TrafficLayer();
+    trafficLayer.setMap(map);
+}
+
+function initMap() {
+    // will be done inside promise instead
+}
   
-  function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     directionsService
       .route({
         origin: {
-          query: "Melbourne",
+          query: currentUser.cars[car_id].buildingAddress,
         },
         destination: {
-          query: "Sydney",
+          query: currentUser.cars[car_id].workAddress,
         },
         travelMode: google.maps.TravelMode.DRIVING,
       })
@@ -195,4 +211,27 @@ function initMap() {
         directionsRenderer.setDirections(response);
       })
       .catch((e) => window.alert("Directions request failed due to " + status));
-  }
+}
+
+function changebgcolor() {
+    document.getElementById("bg").style.backgroundColor = currentUser.cars[car_id].lightColor;
+}
+
+function colorchanger(colorname) {
+    console.log("h");
+    currentUser.cars[car_id].lightColor = colorname;
+    const carName_ = currentUser.cars[car_id].carName;
+    const username_ = currentUser.username;
+    const newcolor = currentUser.cars[car_id].lightColor;
+    const body = {carName_, username_,newcolor};
+    console.log(body);
+  
+    $.post(`${API_URL}/users/update/color`, body).then(response => {
+      // location.href = '/success';
+    })
+    .catch(error => {
+      console.error(`Error: ${error}`);
+    });
+
+    changebgcolor();
+}
