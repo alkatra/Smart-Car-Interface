@@ -7,72 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="style.css">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <title>Smart Car</title>
   </head>
 
   <body>
-    <div id="bg">
-    <div id="spacer"></div>
+    
 
-    <div class="container">
-      <div class="row">
-        <div class="col-sm">
-          <div class="card text-white bg-info mb-3">
-            <div class="card-body"  style="padding: 4%;">
-              <center><h1>Climate Controls</h1>
-              <h4>Current Temperature Setting: <br/>
-                <div id="add-temp">
-                  <!-- ADD TEMPERATURE FROM JS -->
-                </div>
-                <br/>
-                </h4>
-                <button class="btn btn-danger" id="temp-increase">Increase</button>
-                <button class="btn btn-primary" id="temp-decrease">Decrease</button></center>
-              </div>
-            </div>
-            <div id="map"></div>
-            <div id="add-error" style="max-width: 100%;"></div>
-        </div>
-        <div class="col-sm">
-          <div class="card text-white bg-info mb-3">
-            <div class="card-body"  style="padding: 6%;">
-              <center><h1>Seat Positioning</h1></center>
-              <div id="seat-div"><img src="seat.png" id="seat-img" class="center"></div>
-              <center><br/>
-              <button class="btn btn-warning" id="seat-decrease">Shift Left</button>
-              <button class="btn btn-warning" id="seat-increase">Shift Right</button></center>
-            </div>
-            <div id="add-error" style="max-width: 100%;"></div>
-          </div>
-          <div class="card text-white bg-info mb-3"  style="padding: 2%;">
-            <center><h2>Change Ambient Lighting</h2></center>
-            <div id="colors-container" style="color:black; user-select: none;">
-              <center>
-                <div id="color-pink" onclick='colorchanger("pink")'>Pink</div>
-                <div id="color-blue" onclick='colorchanger("lightblue")'>Blue</div>
-                <div id="color-grey" onclick='colorchanger("lightgrey")'>Grey</div>
-                <div id="color-orange" onclick='colorchanger("orange")'>Orange</div>
-                <div id="color-green" onclick='colorchanger("lightgreen")'>Green</div>
-                <div id="color-plum" onclick='colorchanger("plum")'>Plum</div>
-                <div id="color-slateblue" onclick='colorchanger("slateblue")'>Slate Blue</div>
-                <div id="color-lightsalmon" onclick='colorchanger("lightsalmon")'>Light Salmonm</div>
-                <div id="color-khaki" onclick='colorchanger("khaki")'>Khaki</div>
-                <div id="color-seagreen" onclick='colorchanger("seagreen")'>Sea Green</div>
-                <div id="color-rosybrown" onclick='colorchanger("rosybrown")'>Rosy Brown</div>
-              </center>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div><br/><br/><br/>
-  </div>
-
-
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNWtz-MGf1IrEK_5Ny1jg2puwLHImKYhw&callback=initMap&libraries=&v=weekly"
-      async
-    ></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="roompage.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
