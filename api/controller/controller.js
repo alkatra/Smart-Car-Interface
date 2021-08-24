@@ -46,3 +46,10 @@ exports.changeColor = (req,res) => {{
         res.status(200).send({message: `done`}));
 }}
 
+exports.changeExternalTemp = (req,res) => {{
+    username = req.body.username_;
+    newtemp = req.body.newtemp;
+    userDB.findOneAndUpdate({"username": username}, {$set: {"externalTemp": newtemp}}).then(
+        res.status(200).send({message: `done`}));
+}}
+
