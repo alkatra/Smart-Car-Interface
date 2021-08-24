@@ -13,7 +13,7 @@ $.get(`${API_URL}/users`).then(response => {
     response.forEach(users => {
         if(users.username == curUser) {
             currentUser = new currentUserClass(users.username, users.rooms, users.cars);
-            document.getElementById('adduser').textContent += currentUser.username;
+            document.getElementById('adduser').textContent += currentUser.username;      
             addRoomsAndCars();
         }
     });

@@ -2,8 +2,14 @@ var userDB = require('../models/model');
 
 exports.addRoom = (req,res) => {{
     username =  req.body.username_;
-    newroom = req.body.newroom;
-    userDB.findOneAndUpdate({"username": username}, {$push: {"rooms": newroom}}).then(res.status(200).send({message: `dones`}));
+    roomName = req.body.roomname;
+    climSetting = 24;
+    lights = [];
+    userDB.findOneAndUpdate({"username": username}, {$push: {"rooms": {
+        "roomName": roomName,
+        "climSetting": climSetting,
+        "lights": lights
+    }}}).then(res.status(200).send({message: `done`}));
 }}
 
 exports.addCar = (req,res) => {{
@@ -19,7 +25,7 @@ exports.addCar = (req,res) => {{
         "seatSetting": seatSetting,
         "lightColor": lightColor,
         "workAddress": workAddress
-    }}}).then(res.status(200).send({message: `dones`}));
+    }}}).then(res.status(200).send({message: `done`}));
 }}
 
 exports.updateTemp = (req,res) => {{

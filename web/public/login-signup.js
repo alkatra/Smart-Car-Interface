@@ -83,6 +83,7 @@ $('#signup-details').on('click', () => {
 
 $('#roomname-details').on('click', () => {
   const roomname = $('#roomname').val();
+  console.log(roomname);
   rooms.push(roomname);
   
   $('#append-rooms').append(`
@@ -143,10 +144,10 @@ function pushcar(idx) {
 
 function pushroom(idx) {
   var username_ = $('#username').val();
-  const newroom = rooms[idx];
+  const roomname = rooms[idx];
   const body = {
     username_,
-    newroom
+    roomname
   };
   
   $.post(`${API_URL}/users/update/rooms`, body).then(response => {

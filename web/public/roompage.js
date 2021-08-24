@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api';
+// const API_URL = 'http://localhost:5000/api';
 const MQTT_URL = 'http://localhost:5001';
 var outsideTemp = 0;
 var insideTemp = 0;

@@ -3,7 +3,7 @@ function addRoomsAndCars() {
         $('#rooms-edit').append(`
         <div class="card text-white bg-info mb-3" style="width: 10rem;"> 
             <div class="card-body" style="padding: 4%;user-select: none;" onclick='chooseroom(${i})'>
-                ${currentUser.rooms[i]}
+                ${currentUser.rooms[i].roomName}
             </div>
         </div>
         `)
