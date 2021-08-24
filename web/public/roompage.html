@@ -7,13 +7,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="style.css">
-    <title>Smart Car</title>
+    <title>Smart Room</title>
   </head>
 
   <body>
+    <div id="spacer"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <div class="card text-white bg-info mb-3">
+            <div class="card-body"  style="padding: 4%;">
+              <div id="auto-clim-control">
+                <center>
+                  <h2>Room Temperature</h2>
+                  <div id="add-outside-temp">
+                    <!-- ADD from JS -->
+                  </div>
+                  <div id="add-inside-temp">
+                    <!-- ADD from JS -->
+                  </div>
+                  <br/>
+                  <button class="btn btn-warning" id="sync-temp">Sync Temp Sensor</button>
+                  <button class="btn btn-warning" id="make-manual">Switch to Manual Adjustment</button>
+                </center>
+              </div>
+
+              <div id="manual-clim-control">
+                <center>
+                  <h2>Room Temperature</h2>
+                  <div id="add-temp">
+                    <!-- ADD TEMPERATURE FROM JS -->
+                  </div>
+                  <br/>
+                  <button class="btn btn-danger" id="temp-increase">Warmer</button>
+                  <button class="btn btn-primary" id="temp-decrease">Colder</button><br/>
+                  <br/>
+                  <button class="btn btn-warning" id="sync-temp">Sync Temp Sensor</button>
+                  <button class="btn btn-warning" id="make-auto">Switch to Auto Adjustment</button>
+                </center>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          
+        </div>
+      </div>
+    </div>  
     
+  
+      
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="current-user.js"></script>
     <script src="roompage.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   </body>

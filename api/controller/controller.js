@@ -46,3 +46,10 @@ exports.changeColor = (req,res) => {{
         res.status(200).send({message: `done`}));
 }}
 
+exports.changeRoomTemp = (req,res) => {{
+    roomname = req.body.roomname_;
+    username =  req.body.username_;
+    newtemp = req.body.newtemp;
+    userDB.findOneAndUpdate({"username": username, "rooms.roomName": roomname}, {$set: {"rooms.$.roomTemp": newtemp}}).then(
+        res.status(200).send({message: `done`}));
+}}
