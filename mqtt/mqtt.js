@@ -1,14 +1,13 @@
 const mqtt = require('mqtt');
 const express = require('express');
 const bodyParser = require('body-parser');
+    
 const mongoose = require('mongoose');
-const randomCoordinates = require('random-coordinates');
 
 
-mongoose.connect('mongodb+srv://dbAdmin:dbAdmin@cluster0.2dme8.mongodb.net/mydb?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://dbAdmin:dbAdmin@cluster0.2dme8.mongodb.net/mydb?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true , useFindAndModify: false });
 
-const User = require('./models/user');
-
+const UsersM = require('./models/model');
 
 const app = express();
 app.use(express.static('public'));
@@ -29,57 +28,26 @@ app.use(bodyParser.urlencoded({
 const client = mqtt.connect("mqtt://broker.hivemq.com:1883");
 
 client.on('connect', () => {
-    client.subscribe('/sensorData');
+    client.subscribe('/sg-iot-project/exttemp');
     console.log('mqtt connected');
 });
 
 client.on('message', (topic, message) => {
-    if (topic == '/sensorData') {
-        const data = JSON.parse(message);
-        
-        Device.findOne({"name": data.deviceId }, (err, device) => {
-        if (err) {
-            console.log(err)
-        }
+    if (topic == '/sg-iot-project/exttemp') {
+        const newtemp = JSON.parse(message);
+        console.log(newtemp);
 
-        const { sensorData } = device;
-        const { ts, loc, temp } = data;
-
-        sensorData.push({ ts, loc, temp });
-        device.sensorData = sensorData;
-
-        device.save(err => {
-            if (err) {
-            console.log(err)
-            }
-        });
-        });
+        UsersM.findOneAndUpdate({"username": "admin"}, {$set: {"externalTemp": newtemp}}).then(
+            console.log("pushed")
+        );
     }
     });
 
 app.post('/send-command', (req, res) => {
-    const { deviceId, command }  = req.body;
-    const topic = `/myid/command/${deviceId}`;
-    client.publish(topic, command, () => {
+    const { newtemp }  = req.body;
+    const topic = `/sg-iot-project/exttemp`;
+    client.publish(topic, newtemp, () => {
       res.send('published new message');
-    });
-});
-
-app.put('/sensor-data', (req, res) => {
-    const { deviceId }  = req.body;
-
-    const [lat, lon] = randomCoordinates().split(", ");
-    const ts = new Date().getTime();
-    const loc = { lat, lon };
-    min = Math.ceil(20);
-    max = Math.floor(50);
-    temp = Math.floor(Math.random() * (max - min + 1) + min);
-
-    const topic = `/sensorData`;
-    const message = JSON.stringify({ deviceId, ts, loc, temp });
-
-    client.publish(topic, message, () => {
-        res.send('published new message');
     });
 });
 

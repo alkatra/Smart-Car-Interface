@@ -41,6 +41,10 @@ app.get('/roompage', (req, res) => {
     res.sendFile(`${base}/roompage.html`);
 })
 
+app.get('/changetemp', (req, res) => {
+    res.sendFile(`${base}/exttempchange.html`);
+})
+
 app.get('*', (req,res) => {
     res.sendFile(`${base}/404.html`);
 });
