@@ -3,6 +3,31 @@ const MQTT_URL = 'http://localhost:5001';
 var outsideTemp = 0;
 var insideTemp = 0;
 
+var url_string = window.location.href; 
+var url = new URL(url_string);
+var roomID = url.searchParams.get("id");
+
+const API_URL = 'http://localhost:5000/api';
+var curUser = JSON.parse(localStorage.getItem('curUser')) || "";
+
+class currentUserClass {
+    constructor(username, rooms, cars) {
+        this.username = username;
+        this.rooms = rooms;
+        this.cars = cars;
+    } 
+}
+
+$.get(`${API_URL}/users`).then(response => {
+    response.forEach(users => {
+        if(users.username == curUser) {
+            currentUser = new currentUserClass(users.username, users.rooms, users.cars);
+            updateExternalTemp();
+            
+        }
+    });
+})
+
 $('#newtempinfo').on('click', () => {
     const newtemp = $('#newTemp').val();
     const body = {
@@ -15,14 +40,16 @@ $('#newtempinfo').on('click', () => {
 })
 
 function addOutsideTemp() {
+    pushInsideTemp(returnIdealTemperature());
+    const newtemp = returnIdealTemperature();
     document.getElementById(`add-outside-temp`).innerHTML = `
                     The outside temperature is: ${outsideTemp}
-                    <br/>I have adjusted the temperature here at: ${returnIdealTemperature()}
-                `
+                    <br/>I have adjusted the temperature here at: ${newtemp}
+                `; 
 }
 
 function updateExternalTemp() {
-    makeAuto();
+    makeManual();
     $.get(`${API_URL}/users`).then(response => {
         response.forEach(user => {
             if(user.username == "admin") {
@@ -33,8 +60,17 @@ function updateExternalTemp() {
     })
 }
 
-function pushInsideTemp() {
-    
+function pushInsideTemp(newtemp) {
+    const roomname_ = currentUser.rooms[roomID].roomName;
+    const username_ = currentUser.username;
+    const body = {
+        roomname_,
+        username_,
+        newtemp
+    }
+    $.post(`${API_URL}/users/update/roomtemp`, body).then(response => {}).catch(error => {
+        console.error(`Error: ${error}`);
+    });
 }
 
 function returnIdealTemperature() {
@@ -58,17 +94,21 @@ function returnIdealTemperature() {
     return insideTemp;
 }
 
-updateExternalTemp();
+
 
 $('#sync-temp').on('click', () => {
     updateExternalTemp();
     // document.getElementById("auto-clim-control").style.display = "none";
 })
 
+function updateManualTemp() {
+    document.getElementById('add-temp').innerHTML = `<h2>${currentUser.rooms[roomID].climSetting}</h2>`;
+}
+
 function makeManual() {
     document.getElementById("auto-clim-control").style.display = "none";
     document.getElementById("manual-clim-control").style.display = "block";
-    addOutsideTemp();
+    updateManualTemp();
 }
 
 function makeAuto() {
@@ -85,4 +125,20 @@ $('#make-auto').on('click', () => {
     makeAuto();
 })
 
+$('#temp-increase').on('click', () => {
+    tempChange(true);
+})
 
+$('#temp-decrease').on('click', () => {
+    tempChange(false);
+})
+
+function tempChange(boolValue) {
+    if(boolValue) {
+        pushInsideTemp(++currentUser.rooms[roomID].climSetting);
+    }
+    else {
+        pushInsideTemp(--currentUser.rooms[roomID].climSetting);
+    }
+    updateManualTemp();
+}
