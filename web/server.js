@@ -37,6 +37,10 @@ app.get('/carpage', (req, res) => {
     res.sendFile(`${base}/carpage.html`);
 })
 
+app.get('/roompage', (req, res) => {
+    res.sendFile(`${base}/roompage.html`);
+})
+
 app.get('*', (req,res) => {
     res.sendFile(`${base}/404.html`);
 });

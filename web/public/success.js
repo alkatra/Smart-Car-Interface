@@ -22,3 +22,7 @@ function addRoomsAndCars() {
 function choosecar(idx) {
     location.href=`/carpage?id=${idx}`;
 }
+
+function chooseroom(idx) {
+    location.href=`/roompage?id=${idx}`;
+}
