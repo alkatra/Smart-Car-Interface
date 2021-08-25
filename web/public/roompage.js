@@ -1,5 +1,6 @@
-// const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://localhost:5000/api';
 const MQTT_URL = 'http://localhost:5001';
+
 var outsideTemp = 0;
 var insideTemp = 0;
 
@@ -7,7 +8,6 @@ var url_string = window.location.href;
 var url = new URL(url_string);
 var roomID = url.searchParams.get("id");
 
-const API_URL = 'http://localhost:5000/api';
 var curUser = JSON.parse(localStorage.getItem('curUser')) || "";
 
 class currentUserClass {
@@ -18,30 +18,28 @@ class currentUserClass {
     } 
 }
 
+function removeError() {
+    document.getElementById('add-error').innerHTML = ``
+}
+
+function addError() {
+    document.getElementById('add-error').innerHTML = `<br/><div class='alert alert-danger' role='alert'><button class="btn btn-danger" onclick="removeError()"> X </button> Limit reached.</div>`
+}
+
 $.get(`${API_URL}/users`).then(response => {
     response.forEach(users => {
         if(users.username == curUser) {
             currentUser = new currentUserClass(users.username, users.rooms, users.cars);
-            updateExternalTemp();
-            
+            makeManual();
+            addLightsToTable();
         }
-    });
-})
-
-$('#newtempinfo').on('click', () => {
-    const newtemp = $('#newTemp').val();
-    const body = {
-        newtemp
-    }
-    $.post(`${MQTT_URL}/send-command`, body).then(response => {})
-    .catch(error => {
-      console.error(`Error: ${error}`);
     });
 })
 
 function addOutsideTemp() {
     pushInsideTemp(returnIdealTemperature());
     const newtemp = returnIdealTemperature();
+    currentUser.rooms[roomID].climSetting = newtemp;
     document.getElementById(`add-outside-temp`).innerHTML = `
                     The outside temperature is: ${outsideTemp}
                     <br/>I have adjusted the temperature here at: ${newtemp}
@@ -49,7 +47,6 @@ function addOutsideTemp() {
 }
 
 function updateExternalTemp() {
-    makeManual();
     $.get(`${API_URL}/users`).then(response => {
         response.forEach(user => {
             if(user.username == "admin") {
@@ -94,13 +91,6 @@ function returnIdealTemperature() {
     return insideTemp;
 }
 
-
-
-$('#sync-temp').on('click', () => {
-    updateExternalTemp();
-    // document.getElementById("auto-clim-control").style.display = "none";
-})
-
 function updateManualTemp() {
     document.getElementById('add-temp').innerHTML = `<h2>${currentUser.rooms[roomID].climSetting}</h2>`;
 }
@@ -114,7 +104,55 @@ function makeManual() {
 function makeAuto() {
     document.getElementById("auto-clim-control").style.display = "block";
     document.getElementById("manual-clim-control").style.display = "none";
-    addOutsideTemp();
+    // addOutsideTemp();
+    updateExternalTemp();
+}
+
+function tempChange(boolValue) {
+    if(boolValue) {
+        const newtemp = currentUser.rooms[roomID].climSetting + 1;
+        if(newtemp < 33) {
+            pushInsideTemp(newtemp);    
+            currentUser.rooms[roomID].climSetting++;
+        }
+        else {
+            addError();
+        }
+        if(newtemp == 16) {
+            removeError();
+        }
+    }
+    else {
+        const newtemp = currentUser.rooms[roomID].climSetting - 1;
+        if(newtemp > 14) {
+            pushInsideTemp(newtemp);
+            currentUser.rooms[roomID].climSetting--;
+        }
+        else {
+            addError();
+        }
+        if(newtemp == 31) {
+            removeError();
+        }
+    }
+    updateManualTemp();
+}
+
+function addLightsToTable() {
+    console.log(currentUser.rooms[roomID].lights);
+    for(let i = 0; i < currentUser.rooms[roomID].lights.length; i++) {
+        $('#lightListTable tbody').append(`
+            <tr>
+            <td><input class="form-check-input" type="radio" name="flexRadioDefault" onclick="lightChosen(${i})">
+            <label class="form-check-label" for="flexRadioDefault1">${currentUser.rooms[roomID].lights[i].ID}</label></td>
+            <td>${currentUser.rooms[roomID].lights[i].Name}</td>
+            </tr>`
+        );
+    }
+}
+
+function lightChosen(idx) {
+    console.log(idx);
 }
 
 $('#make-manual').on('click', () => {
@@ -133,12 +171,36 @@ $('#temp-decrease').on('click', () => {
     tempChange(false);
 })
 
-function tempChange(boolValue) {
-    if(boolValue) {
-        pushInsideTemp(++currentUser.rooms[roomID].climSetting);
+$('#sync-temp').on('click', () => {
+    updateExternalTemp();
+    // document.getElementById("auto-clim-control").style.display = "none";
+})
+
+$('#light-adder').on('click', () => {
+    const lightID = $('#light-id').val();
+    const lightName = $('#light-name').val();
+    const username_ = currentUser.username;
+    const roomname_ = currentUser.rooms[roomID].roomName;
+    const body = {
+        lightID,
+        lightName,
+        roomname_,
+        username_
     }
-    else {
-        pushInsideTemp(--currentUser.rooms[roomID].climSetting);
+    console.log(body);
+    $.post(`${API_URL}/users/add/light`, body).then(response => {})
+    .catch(error=> {
+        console.error(`Error: ${error}`);
+    });
+})
+
+$('#newtempinfo').on('click', () => {
+    const newtemp = $('#newTemp').val();
+    const body = {
+        newtemp
     }
-    updateManualTemp();
-}
+    $.post(`${MQTT_URL}/send-command`, body).then(response => {})
+    .catch(error => {
+      console.error(`Error: ${error}`);
+    });
+})

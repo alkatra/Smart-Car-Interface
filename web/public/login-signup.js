@@ -150,7 +150,7 @@ function pushroom(idx) {
     roomname
   };
   
-  $.post(`${API_URL}/users/update/rooms`, body).then(response => {
+  $.post(`${API_URL}/users/add/rooms`, body).then(response => {
 
   })
   .catch(error => {

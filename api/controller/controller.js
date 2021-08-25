@@ -59,3 +59,16 @@ exports.changeRoomTemp = (req,res) => {{
     userDB.findOneAndUpdate({"username": username, "rooms.roomName": roomname}, {$set: {"rooms.$.climSetting": newtemp}}).then(
         res.status(200).send({message: `done`}));
 }}
+
+exports.addLight = (req,res) => {{
+    username = req.body.username_;
+    lightID = req.body.lightID;
+    lightName = req.body.lightName;
+    roomname = req.body.roomname_;
+    userDB.findOneAndUpdate({"username": username, "rooms.roomName": roomname}, {$push: {"rooms.$.lights": {
+        "ID": lightID,
+        "Name": lightName,
+        "Color": "lightblue"
+    }}}).then(
+        res.status(200).send({message: `done`}));
+}}

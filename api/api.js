@@ -58,11 +58,12 @@ app.post('/api/users', (req, res) => {
 });
 
 app.post('/api/users/update/color', Controller.changeColor); 
-app.post('/api/users/update/rooms', Controller.addRoom);
+app.post('/api/users/add/rooms', Controller.addRoom);
 app.post('/api/users/update/cars', Controller.addCar); 
 app.post('/api/users/update/temp', Controller.updateTemp); 
 app.post('/api/users/update/seat', Controller.updateSeat); 
 app.post('/api/users/update/roomtemp', Controller.changeRoomTemp); 
+app.post('/api/users/add/light', Controller.addLight); 
 
 
 app.listen(port, () => {

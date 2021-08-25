@@ -45,14 +45,53 @@
                   <button class="btn btn-warning" id="make-auto">Switch to Auto Adjustment</button>
                 </center>
               </div>
+              
+              <div id="add-error"></div>
 
             </div>
           </div>
         </div>
+
+
         <div class="col-sm">
-          
+          <div class="card text-white bg-info mb-3">
+            <div class="card-body"  style="padding: 4%;">
+              <h1>Add New Light</h1>
+      
+              <div class="form-group">
+                  <label for="light-id">Identifier</label>
+                  <input type="text" class="form-control" id="light-id" />
+              </div>
+              
+              <div class="form-group">
+                  <label for="light-name">Light Name</label>
+                  <input type="text" class="form-control" id="light-name" />
+              </div>
+              
+              <button class="btn btn-success" id="light-adder">Add this light!</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card text-white bg-info mb-3">
+        <div class="card-body"  style="padding: 4%;">
+          <h1>Choose Light to Edit</h1><br />
+          <table id="lightListTable" class="table" style="color:white">
+            <thead>
+              <tr>
+                <th>Identifier</th>
+                <th>Light</th>
+              </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+          </table> 
         </div>
       </div>
+
     </div>  
     
   
