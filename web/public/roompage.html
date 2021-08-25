@@ -50,6 +50,28 @@
 
             </div>
           </div>
+
+          <div class="card text-white bg-info mb-3">
+            <div class="card-body"  style="padding: 4%;">
+              <h1>Choose Light to Edit</h1><br />
+              <table id="lightListTable" class="table" style="color:white">
+                <thead>
+                  <tr>
+                    <th>Light</th>
+                    <th>Color</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+              </table> 
+            </div>
+          </div>
+
+          <div id="currentcolor" >
+            
+          </div>
+
         </div>
 
 
@@ -57,11 +79,6 @@
           <div class="card text-white bg-info mb-3">
             <div class="card-body"  style="padding: 4%;">
               <h1>Add New Light</h1>
-      
-              <div class="form-group">
-                  <label for="light-id">Identifier</label>
-                  <input type="text" class="form-control" id="light-id" />
-              </div>
               
               <div class="form-group">
                   <label for="light-name">Light Name</label>
@@ -71,33 +88,45 @@
               <button class="btn btn-success" id="light-adder">Add this light!</button>
             </div>
           </div>
+
+          <div class="card text-white bg-info mb-3">
+            <div class="card-body"  style="padding: 4%;">
+              <div id="colors-container" style="color:black; user-select: none;">
+                <center>
+                  <h1>Color Chooser</h1>
+                  <br/>
+                  <div id="color-pink" onclick='colorchanger("pink")'>Pink</div>
+                  <div id="color-blue" onclick='colorchanger("lightblue")'>Blue</div>
+                  <div id="color-grey" onclick='colorchanger("lightgrey")'>Grey</div>
+                  <div id="color-orange" onclick='colorchanger("orange")'>Orange</div>
+                  <div id="color-green" onclick='colorchanger("lightgreen")'>Green</div>
+                  <div id="color-plum" onclick='colorchanger("plum")'>Plum</div>
+                  <div id="color-slateblue" onclick='colorchanger("slateblue")'>Slate Blue</div>
+                  <div id="color-lightsalmon" onclick='colorchanger("lightsalmon")'>Light Salmon</div>
+                  <div id="color-khaki" onclick='colorchanger("khaki")'>Khaki</div>
+                  <div id="color-seagreen" onclick='colorchanger("seagreen")'>Sea Green</div>
+                  <div id="color-rosybrown" onclick='colorchanger("rosybrown")'>Rosy Brown</div>
+                </center>
+              </div>
+            </div>
+          </div>
+
+
         </div>
+
+        
 
       </div>
 
-      <div class="card text-white bg-info mb-3">
-        <div class="card-body"  style="padding: 4%;">
-          <h1>Choose Light to Edit</h1><br />
-          <table id="lightListTable" class="table" style="color:white">
-            <thead>
-              <tr>
-                <th>Identifier</th>
-                <th>Light</th>
-              </tr>
-            </thead>
-            <tbody>
-                
-            </tbody>
-          </table> 
-        </div>
-      </div>
+
+        
 
     </div>  
     
   
       
 
-
+    <script src="colors.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="roompage.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>

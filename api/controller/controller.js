@@ -44,11 +44,36 @@ exports.updateSeat = (req,res) => {{
         res.status(200).send({message: `done`}));
 }}
 
-exports.changeColor = (req,res) => {{
+exports.changeCarColor = (req,res) => {{
     carName = req.body.carName_;
     username =  req.body.username_;
     newcolor = req.body.newcolor;
     userDB.findOneAndUpdate({"username": username, "cars.carName": carName}, {$set: {"cars.$.lightColor": newcolor}}).then(
+        res.status(200).send({message: `done`}));
+}}
+
+exports.changeRoomColor = (req,res) => {{
+    username = req.body.username_;
+    lightName = req.body.lightName;
+    roomname = req.body.roomname_;
+    newcolor = req.body.newcolor;
+    userDB.findOneAndUpdate(
+        {"username": username, "rooms.roomName": roomname}, 
+        {
+            $set: 
+            {
+                "rooms.$.lights.$[element]": {
+                    "Name": lightName,
+                    "Color": newcolor
+                }
+            }
+        },
+        {
+            arrayFilters: [{
+                "element.Name": lightName
+            }]
+        }
+    ).then(
         res.status(200).send({message: `done`}));
 }}
 
@@ -62,11 +87,9 @@ exports.changeRoomTemp = (req,res) => {{
 
 exports.addLight = (req,res) => {{
     username = req.body.username_;
-    lightID = req.body.lightID;
     lightName = req.body.lightName;
     roomname = req.body.roomname_;
     userDB.findOneAndUpdate({"username": username, "rooms.roomName": roomname}, {$push: {"rooms.$.lights": {
-        "ID": lightID,
         "Name": lightName,
         "Color": "lightblue"
     }}}).then(

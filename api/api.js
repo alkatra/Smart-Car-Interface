@@ -57,7 +57,8 @@ app.post('/api/users', (req, res) => {
     });
 });
 
-app.post('/api/users/update/color', Controller.changeColor); 
+app.post('/api/users/update/car/color', Controller.changeCarColor); 
+app.post('/api/users/update/room/color', Controller.changeRoomColor); 
 app.post('/api/users/add/rooms', Controller.addRoom);
 app.post('/api/users/update/cars', Controller.addCar); 
 app.post('/api/users/update/temp', Controller.updateTemp); 

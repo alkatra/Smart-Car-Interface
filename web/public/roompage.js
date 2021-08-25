@@ -8,6 +8,8 @@ var url_string = window.location.href;
 var url = new URL(url_string);
 var roomID = url.searchParams.get("id");
 
+var selectedLightID = 0;
+
 var curUser = JSON.parse(localStorage.getItem('curUser')) || "";
 
 class currentUserClass {
@@ -31,7 +33,11 @@ $.get(`${API_URL}/users`).then(response => {
         if(users.username == curUser) {
             currentUser = new currentUserClass(users.username, users.rooms, users.cars);
             makeManual();
-            addLightsToTable();
+            for(let i = 0; i < currentUser.rooms[roomID].lights.length; i++) {
+                addLightsToTable(i);
+            }
+            addCurrentLightColorDiv();
+            changeCurrentColorDiv(currentUser.rooms[roomID].lights[0].Color);
         }
     });
 })
@@ -138,21 +144,63 @@ function tempChange(boolValue) {
     updateManualTemp();
 }
 
-function addLightsToTable() {
-    console.log(currentUser.rooms[roomID].lights);
-    for(let i = 0; i < currentUser.rooms[roomID].lights.length; i++) {
-        $('#lightListTable tbody').append(`
-            <tr>
-            <td><input class="form-check-input" type="radio" name="flexRadioDefault" onclick="lightChosen(${i})">
-            <label class="form-check-label" for="flexRadioDefault1">${currentUser.rooms[roomID].lights[i].ID}</label></td>
-            <td>${currentUser.rooms[roomID].lights[i].Name}</td>
-            </tr>`
-        );
+function addLightsToTable(i) {
+    $('#lightListTable tbody').append(`
+        <tr>
+        <td>
+            <input class="form-check-input" type="radio" name="flexRadioDefault" onclick="lightChosen(${i})">
+            ${currentUser.rooms[roomID].lights[i].Name}
+        </td>
+        <td><div id="changecolorintable_${i}">
+            ${currentUser.rooms[roomID].lights[i].Color}
+        </div>
+        </td>
+        </tr>`
+    );
+}
+
+function colorchanger(newcolor) {
+    currentUser.rooms[roomID].lights[selectedLightID].Color = newcolor;
+    const roomname_ = currentUser.rooms[roomID].roomName;
+    const username_ = currentUser.username;
+    const lightName = currentUser.rooms[roomID].lights[selectedLightID].Name;
+
+    const body = {
+        username_,
+        lightName,
+        roomname_,
+        newcolor
     }
+  
+    $.post(`${API_URL}/users/update/room/color`, body).then(response => {
+      console.log(body);
+    })
+    .catch(error => {
+      console.error(`Error: ${error}`);
+    });
+
+    document.getElementById(`changecolorintable_${selectedLightID}`).innerHTML = `${newcolor}`;
+    changeCurrentColorDiv(newcolor);
+}
+
+function changeCurrentColorDiv(newcolor) {
+    document.getElementById('currentcolor').style.backgroundColor = newcolor;
+}
+
+function addCurrentLightColorDiv() {
+    document.getElementById('currentcolor').innerHTML = `
+    <br/>
+        <h2><center>
+            ${currentUser.rooms[roomID].lights[selectedLightID].Name} Color
+        </center></h2>
+    <br/>
+    `
+    changeCurrentColorDiv(currentUser.rooms[roomID].lights[selectedLightID].Color);
 }
 
 function lightChosen(idx) {
-    console.log(idx);
+    selectedLightID = idx;
+    addCurrentLightColorDiv();
 }
 
 $('#make-manual').on('click', () => {
@@ -177,21 +225,26 @@ $('#sync-temp').on('click', () => {
 })
 
 $('#light-adder').on('click', () => {
-    const lightID = $('#light-id').val();
     const lightName = $('#light-name').val();
     const username_ = currentUser.username;
     const roomname_ = currentUser.rooms[roomID].roomName;
     const body = {
-        lightID,
         lightName,
         roomname_,
         username_
     }
-    console.log(body);
+
     $.post(`${API_URL}/users/add/light`, body).then(response => {})
     .catch(error=> {
         console.error(`Error: ${error}`);
     });
+    
+    currentUser.rooms[roomID].lights.push({
+        "Name": lightName,
+        "Color": "lightblue"
+    });
+
+    addLightsToTable(currentUser.rooms[roomID].lights.length - 1);
 })
 
 $('#newtempinfo').on('click', () => {
