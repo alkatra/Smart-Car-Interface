@@ -45,9 +45,9 @@ function addRoomsAndCars() {
 }
 
 function choosecar(idx) {
-    location.href=`/carpage?id=${idx}`;
+    location.href=`/carpage?user=${currentUser.username}&id=${idx}`;
 }
 
 function chooseroom(idx) {
-    location.href=`/roompage?id=${idx}`;
+    location.href=`/roompage?user=${currentUser.username}&id=${idx}`;
 }

@@ -2,7 +2,11 @@ const express = require('express');
 
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://dbAdmin:dbAdmin@cluster0.2dme8.mongodb.net/mydb?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true , useFindAndModify: false });
+mongoose.connect('mongodb+srv://dbAdmin:dbAdmin@cluster0.2dme8.mongodb.net/mydb?retryWrites=true&w=majority', {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true, 
+    useFindAndModify: false 
+});
 
 const UsersM = require('./models/model');
 
@@ -28,18 +32,10 @@ app.get('/api/test', (req, res) => {
 
 app.get('/api/users', (req, res) => {
     UsersM.find({}, (err, users) => {
-    return err
-    ? res.send(err)
-    : res.send(users);
-});
-});
-
-app.get('/api/users/address', (req, res) => {
-    UsersM.find({addresses}, (err, users) => {
-    return err
-    ? res.send(err)
-    : res.send(users);
-});
+        return err
+        ? res.send(err)
+        : res.send(users);
+    });
 });
 
 app.post('/api/users', (req, res) => {
@@ -66,8 +62,6 @@ app.post('/api/users/update/seat', Controller.updateSeat);
 app.post('/api/users/update/roomtemp', Controller.changeRoomTemp); 
 app.post('/api/users/add/light', Controller.addLight); 
 
-
 app.listen(port, () => {
     console.log(`listening on port ${port}`);
 });
-  

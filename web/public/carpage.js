@@ -1,7 +1,4 @@
-
-
 const API_URL = 'http://localhost:5000/api';
-var curUser = JSON.parse(localStorage.getItem('curUser')) || "";
 
 var user_id = 0;
 var car_id = 0;
@@ -31,6 +28,9 @@ function addCarName() {
 
 $.get(`${API_URL}/users`).then(response => {
     response.forEach(users => {
+        var url_string = window.location.href
+        var url = new URL(url_string);
+        var curUser = url.searchParams.get("user");
         if(users.username == curUser) {
             currentUser = new currentUserClass(users.username, users.rooms, users.cars);
             addTemp();

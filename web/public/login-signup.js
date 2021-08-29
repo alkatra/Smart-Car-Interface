@@ -58,7 +58,7 @@ $('#signup-details').on('click', () => {
     password_
   };
 
-  if(!$('#roomname').val()) {
+  if(!rooms) {
     $('#no-rooms').append(`
       <br/><div class='alert alert-danger' role='alert' style="max-width:30%;display:flex;margin: auto;">Please enter atleast one room.</div>`
     );
