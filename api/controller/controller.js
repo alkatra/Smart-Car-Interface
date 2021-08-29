@@ -22,7 +22,7 @@ exports.addCar = (req,res) => {{
     climSetting = req.body.climSetting;
     seatSetting = req.body.seatSetting;
     lightColor = req.body.lightColor;
-    workAddress = req.body.workAddress;\
+    workAddress = req.body.workAddress;
     try {
         userDB.findOneAndUpdate({"username": username}, {$push: {"cars": {
             "carName": carName,
