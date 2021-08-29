@@ -10,20 +10,46 @@
     <div id="first-row"></div><div class="card text-white bg-info mb-3" id="second-row"><h1><center>Login</center></h1>
 
 
+      <!-- <div class="form-group">
+          <label for="id">Username/ID:</label>
+          <input type="text" class="form-control" id="username" />
+      </div>
+      
 
+      <div class="form-group">
+          <label for="name">Password</label>
+          <input type="password" class="form-control" id="password" />
+      </div>
+      
+      <button class="btn btn-success" id="login-details">Login</button> -->
 
-        <div class="form-group">
-            <label for="id">Username/ID:</label>
-            <input type="text" class="form-control" id="username" />
+      <form action="/login" method="post">
+        <div class="field">
+          <label>Username:</label>
+          <input type="text" class="form-control" name="username" />
+
         </div>
-        
-
-        <div class="form-group">
-            <label for="name">Password</label>
-            <input type="password" class="form-control" id="password" />
+        <div class="field">
+          <label>Password:</label>
+          <input type="password" class="form-control" name="password" required />
         </div>
-        
-        <button class="btn btn-success" id="login-details">Login</button></div></div>
+        <div class="field"><br/>
+          <input class="btn btn-success" type="submit" value="Submit" required />
+        </div>
+        <label id="error-message"></label>
+      </form>
+      <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const info = urlParams.get('info');
+    
+        if(info) {
+          const errorMessage = document.getElementById("error-message");
+          errorMessage.innerText = info;
+          errorMessage.style.display = "block";
+        }
+      </script>
+    </div>
+  </div>
 
 
 

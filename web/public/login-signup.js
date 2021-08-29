@@ -1,5 +1,3 @@
-// make sure username is not repeatable
-
 var curUser = JSON.parse(localStorage.getItem('curUser')) || "";
 
 const API_URL = 'http://localhost:5000/api';
@@ -53,11 +51,11 @@ $('#login-details').on('click', () => {
 })
 
 $('#signup-details').on('click', () => {
-  const username = $('#username').val();
-  const password = $('#password').val();
+  const username_ = $('#username').val();
+  const password_ = $('#password').val();
   var body = {
-    username,
-    password
+    username_,
+    password_
   };
 
   if(!$('#roomname').val()) {
@@ -66,24 +64,35 @@ $('#signup-details').on('click', () => {
     );
   }
   else {
-    $.post(`${API_URL}/users`, body)
-      .then(response => {})
+    $.post(`/signup/user`, body)
+      .then(addRoomsandCars())
       .catch(error => {
         console.error(`Error: ${error}`);
       });
-      for(let i = 0; i < rooms.length; i++) {
-        pushroom(i);
-      }
-      for(let j = 0; j < cars.length; j++) {
-        pushcar(j);
-      }
   }
-  
 })
+
+function resolveLater() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve("resolved");
+    }, 1000);
+  });
+}
+
+async function addRoomsandCars() {
+  await resolveLater();
+  for(let i = 0; i < rooms.length; i++) {
+    pushroom(i);
+  }
+  for(let j = 0; j < cars.length; j++) {
+    pushcar(j);
+  }
+  location.href='/';
+}
 
 $('#roomname-details').on('click', () => {
   const roomname = $('#roomname').val();
-  console.log(roomname);
   rooms.push(roomname);
   
   $('#append-rooms').append(`
@@ -98,12 +107,10 @@ $('#roomname-details').on('click', () => {
 
 $('#carname-details').on('click', () => {
   const carName_ = $('#car-name').val();
-  const buildingAddress = "70 Southbank Blvd, Southbank VIC 3006, Australia"
   const workAddress_ = $('#work-address').val();
   const climSetting_ = 24;
 
-  newcar = new cardetails(carName_, climSetting_, buildingAddress,workAddress_);
-  console.log(newcar);
+  newcar = new cardetails(carName_, climSetting_, workAddress_);
 
   cars.push(newcar);
   
@@ -133,7 +140,7 @@ function pushcar(idx) {
     workAddress
   };
 
-  console.log(body);
+
   $.post(`${API_URL}/users/update/cars`, body).then(response => {
   
   })
@@ -149,6 +156,7 @@ function pushroom(idx) {
     username_,
     roomname
   };
+
   
   $.post(`${API_URL}/users/add/rooms`, body).then(response => {
 
@@ -160,5 +168,4 @@ function pushroom(idx) {
 
 function removeroom(id) {
   rooms.splice(id,1);
-  console.log(rooms);
 }

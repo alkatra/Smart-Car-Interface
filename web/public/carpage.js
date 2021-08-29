@@ -190,7 +190,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     directionsService
       .route({
         origin: {
-          query: currentUser.cars[car_id].buildingAddress,
+          query: "70 Southbank Blvd, Southbank VIC 3006, Australia",
         },
         destination: {
           query: currentUser.cars[car_id].workAddress,
