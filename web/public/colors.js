@@ -1,3 +1,5 @@
+// Adds color to div elements for changing colors.
+
 document.getElementById("color-pink").style.backgroundColor = "pink";
 document.getElementById("color-blue").style.backgroundColor = "lightblue";
 document.getElementById("color-grey").style.backgroundColor = "lightgrey";

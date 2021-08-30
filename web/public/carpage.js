@@ -1,9 +1,8 @@
 const API_URL = 'http://localhost:5000/api';
 
-var user_id = 0;
-var car_id = 0;
-const SEAT_LIMIT = 60;
-const TEMP_L_LIMIT = 15;
+var car_id = 0; // Stores car ID from URL parameter
+const SEAT_LIMIT = 60; // Seat goes to +/- 60
+const TEMP_L_LIMIT = 15; // Temperature goes to 15-32
 const TEMP_U_LIMIT = 32;
 
 class currentUserClass {
@@ -15,7 +14,7 @@ class currentUserClass {
 }
 
 function removeError() {
-    document.getElementById('add-error').innerHTML = ``
+    document.getElementById('add-error').innerHTML = `` // Empties add-error div
 }
 
 function addError() {
@@ -33,6 +32,7 @@ $.get(`${API_URL}/users`).then(response => {
         var curUser = url.searchParams.get("user");
         if(users.username == curUser) {
             currentUser = new currentUserClass(users.username, users.rooms, users.cars);
+            // Add data from currentUser to div elements in the page.
             addTemp();
             addCarName();
             adjustSeat();
@@ -49,6 +49,7 @@ function addTemp() {
     document.getElementById('add-temp').innerHTML = `${currentUser.cars[car_id].climSetting}`;
 }
 
+
 function adjustSeat() {
     document.getElementById("seat-div").style.transform = `translate(${currentUser.cars[car_id].seatSetting}px)`;
 }
@@ -61,7 +62,8 @@ $('#seat-decrease').on('click', () => {
     else {
         addError();
     }
-    if(currentUser.cars[car_id].seatSetting == SEAT_LIMIT - 10) {
+    // Removes error automatically if the user goes back up/down from limit
+    if(currentUser.cars[car_id].seatSetting == SEAT_LIMIT - 10) { 
         removeError();
     }
 })
@@ -74,6 +76,7 @@ $('#seat-increase').on('click', () => {
     else {
         addError();
     }
+    // Removes error automatically if the user goes back up/down from limit
     if(currentUser.cars[car_id].seatSetting == -1 * SEAT_LIMIT + 10) {
         removeError();
     }
@@ -87,6 +90,7 @@ $('#temp-increase').on('click', () => {
     else {
         addError();
     }
+    // Removes error automatically if the user goes back up/down from limit
     if(currentUser.cars[car_id].climSetting == TEMP_L_LIMIT + 1) {
         removeError();
     }
@@ -99,7 +103,8 @@ $('#temp-decrease').on('click', () => {
     }
     else {
         addError();
-    }
+    }    
+    // Removes error automatically if the user goes back up/down from limit
     if(currentUser.cars[car_id].climSetting == TEMP_U_LIMIT - 1) {
         removeError();
     }
@@ -170,6 +175,7 @@ function handleSeat(boolValue) {
   });
 }
 
+// variable for google maps api
 let map;
 
 function loadDirections() {
@@ -178,6 +184,8 @@ function loadDirections() {
     const map = new google.maps.Map(document.getElementById("map"));
     directionsRenderer.setMap(map);
     calculateAndDisplayRoute(directionsService, directionsRenderer);
+
+    // comment out below code if you don't want to see traffic data as well.
     const trafficLayer = new google.maps.TrafficLayer();
     trafficLayer.setMap(map);
 }
@@ -190,6 +198,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     directionsService
       .route({
         origin: {
+            // ADD BUILDING ADDRESS HERE.
           query: "70 Southbank Blvd, Southbank VIC 3006, Australia",
         },
         destination: {

@@ -23,6 +23,7 @@ $.get(`${API_URL}/users`).then(response => {
     });
 })
 
+// Adds rooms and cars from list in database.
 function addRoomsAndCars() {
     for(let i = 0; i < currentUser.rooms.length; i++) {
         $('#rooms-edit').append(`

@@ -1,55 +1,51 @@
-var curUser = JSON.parse(localStorage.getItem('curUser')) || "";
-
 const API_URL = 'http://localhost:5000/api';
 
-var rooms = [];
+var rooms = []; // Stores rooms added by user in register.html
+var cars = []; // Stores cars added by user in register.html
+
 class cardetails {
   constructor(carName, climSetting, workAddress) {
     this.carName = carName;
     this.climSetting = climSetting;
     this.workAddress = workAddress;
-    this.seatSetting = 0;
-    this.lightColor = 'lightblue';
+    this.seatSetting = 0;           // Default Setting
+    this.lightColor = 'lightblue';  // Default Setting
   }
 }
-var cars = [];
-
-$('#signup-redirect').on('click', () => {
-    location.href = "/signup";
-})
 
 function removeError() {
-  document.getElementById('user-not-found').innerHTML = ``
+  document.getElementById('user-not-found').innerHTML = `` 
 }
 
 function invalidDetails() {
     document.getElementById('user-not-found').innerHTML = `<div class='alert alert-danger' role='alert'><button class="btn btn-danger" onclick="removeError()"> X </button>    User details incorrect/nonexistent.</div>`;
 }
 
-$('#login-details').on('click', () => {
-    const username = $('#username').val();
-    const password = $('#password').val();
-    $.get(`${API_URL}/users`).then(
-    response => {
-        var success = false;
-        response.forEach(users => {
-            if(users.username == username && users.password == password && users.username != "admin") {
-                localStorage.setItem('curUser', JSON.stringify(users.username));
-                location.href = "/success";
-                success = true;
-            }
-            else if(users.username == username && users.password == password) {
-                localStorage.setItem('curUser', JSON.stringify(users.username));
-                location.href = "/signup";
-                success = true;
-            }
-        }) 
-        if(!success) {
-            invalidDetails();
-        }
-    });
-})
+// THIS IS NOW DONE BY PASSPORT.JS
+// $('#login-details').on('click', () => {
+//     const username = $('#username').val();
+//     const password = $('#password').val();
+//     $.get(`${API_URL}/users`).then(
+//     response => {
+//         var success = false;
+//         response.forEach(users => {
+//             if(users.username == username && users.password == password && users.username != "admin") {
+//                 location.href = "/success";
+//                 success = true;
+//             }
+//             else if(users.username == username && users.password == password) {
+//                 location.href = "/signup";
+//                 success = true;
+//             }
+//         }) 
+//         if(!success) {
+//             invalidDetails();
+//         }
+//     });
+// })
 
+
+// Posts to /signup/user which uses Passport.JS for user.register
 $('#signup-details').on('click', () => {
   const username_ = $('#username').val();
   const password_ = $('#password').val();
@@ -81,7 +77,7 @@ function resolveLater() {
 }
 
 async function addRoomsandCars() {
-  await resolveLater();
+  await resolveLater(); // Add 1000 ms delay to ensure Passport has generated Hashes and salts first.
   for(let i = 0; i < rooms.length; i++) {
     pushroom(i);
   }
@@ -95,6 +91,7 @@ $('#roomname-details').on('click', () => {
   const roomname = $('#roomname').val();
   rooms.push(roomname);
   
+  // Add new room to div.
   $('#append-rooms').append(`
   <div class="card text-white bg-info mb-3"> 
     <div class="card-body"  style="padding: 4%;">
@@ -140,7 +137,7 @@ function pushcar(idx) {
     workAddress
   };
 
-
+  // Check API Documentation
   $.post(`${API_URL}/users/update/cars`, body).then(response => {
   
   })
@@ -157,15 +154,11 @@ function pushroom(idx) {
     roomname
   };
 
-  
+  // Check API Documentation
   $.post(`${API_URL}/users/add/rooms`, body).then(response => {
 
   })
   .catch(error => {
     console.error(`Error: ${error}`);
   });
-}
-
-function removeroom(id) {
-  rooms.splice(id,1);
 }

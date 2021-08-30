@@ -1,9 +1,11 @@
 const API_URL = 'http://localhost:5000/api';
 const MQTT_URL = 'http://localhost:5001';
 
+// Global Variables
 var outsideTemp = 0;
 var insideTemp = 0;
 
+// Get ID of room from URL
 var url_string = window.location.href; 
 var url = new URL(url_string);
 var roomID = url.searchParams.get("id");
@@ -28,6 +30,8 @@ function addError() {
 
 $.get(`${API_URL}/users`).then(response => {
     response.forEach(users => {
+
+        // Get username from URL
         var url_string = window.location.href
         var url = new URL(url_string);
         var curUser = url.searchParams.get("user");
@@ -53,6 +57,7 @@ function addOutsideTemp() {
                 `; 
 }
 
+// gets building's external temperature from admin.
 function updateExternalTemp() {
     $.get(`${API_URL}/users`).then(response => {
         response.forEach(user => {
@@ -64,6 +69,7 @@ function updateExternalTemp() {
     })
 }
 
+// posts the temperature of the room to the database.
 function pushInsideTemp(newtemp) {
     const roomname_ = currentUser.rooms[roomID].roomName;
     const username_ = currentUser.username;
@@ -77,6 +83,7 @@ function pushInsideTemp(newtemp) {
     });
 }
 
+// calculates the ideal temperature for climate controls inside the room.
 function returnIdealTemperature() {
     if(outsideTemp < 21) {
         if(outsideTemp < 16) {
@@ -102,6 +109,8 @@ function updateManualTemp() {
     document.getElementById('add-temp').innerHTML = `<h2>${currentUser.rooms[roomID].climSetting}</h2>`;
 }
 
+
+// following 2 functions changes the climate control settings from Auto <-> Manual.
 function makeManual() {
     document.getElementById("auto-clim-control").style.display = "none";
     document.getElementById("manual-clim-control").style.display = "block";
@@ -125,6 +134,7 @@ function tempChange(boolValue) {
         else {
             addError();
         }
+        // Removes error when user goes back from the limit.
         if(newtemp == 16) {
             removeError();
         }
@@ -138,6 +148,8 @@ function tempChange(boolValue) {
         else {
             addError();
         }
+
+        // Removes error when user goes back from the limit
         if(newtemp == 31) {
             removeError();
         }
