@@ -24,7 +24,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-const port = 5000;
+const port = process.env.PORT || 3000;
 
 app.use(express.static(`${__dirname}/public/generated-docs`));
 
@@ -197,7 +197,7 @@ app.post('/api/users/add/rooms', Controller.addRoom);
 *    "Error Message"
 *  }
 */
-app.post('/api/users/update/roomtemp', Controller.changeRoomTemp); 
+app.post('/api/users/update/roomtemp', Controller.changeRoomTemp);
 
 /**
 * @api {post} /api/users/add/light Add a light inside the room

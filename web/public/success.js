@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://18.118.165.72:3000/api';
 
 class currentUserClass {
     constructor(username, rooms, cars) {

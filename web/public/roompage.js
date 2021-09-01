@@ -1,5 +1,5 @@
-const API_URL = 'http://localhost:5000/api';
-const MQTT_URL = 'http://localhost:5001';
+const API_URL = 'http://18.118.165.72:3000/api';
+const MQTT_URL = 'http://iot-project-mqtt-server.herokuapp.com';
 
 // Global Variables
 var outsideTemp = 0;

@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://18.118.165.72:3000/api';
 
 var car_id = 0; // Stores car ID from URL parameter
 const SEAT_LIMIT = 60; // Seat goes to +/- 60

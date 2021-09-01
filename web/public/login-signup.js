@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://18.118.165.72:3000/api';
 
 var rooms = []; // Stores rooms added by user in register.html
 var cars = []; // Stores cars added by user in register.html

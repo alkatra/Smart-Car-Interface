@@ -20,7 +20,7 @@ passport.use(UsersM.createStrategy());
 passport.serializeUser(UsersM.serializeUser());
 // passport.deserializeUser(UsersM.deserializeUser());
 
-const port = 3000;
+// const port = 3000;
 const base = `${__dirname}/public`;
 
 const bodyParser = require('body-parser');
@@ -118,6 +118,4 @@ app.get('*', (req,res) => {
 });
 
 
-app.listen(port, () => {
-    console.log(`listening on port ${port}`);
-});
+app.listen(process.env.PORT || 3000);

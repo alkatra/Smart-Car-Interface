@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://18.118.165.72:3000/api';
 
 // Simple test to check everything is working properly
 test('Test 2+2 = 4', () => {
